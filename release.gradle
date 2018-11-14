@@ -35,8 +35,8 @@ bintray {
     name = "$project.name"
     desc = "$project.description"
     websiteUrl = 'https://reportportal.github.io/'
-    issueTrackerUrl = "https://github.com/reportportal/$project.name/issues"
-    vcsUrl = "https://github.com/reportportal/$project.name"
+    issueTrackerUrl = "https://github.com/andreifinski/$project.name/issues"
+    vcsUrl = "https://github.com/andreifinski/$project.name"
     githubRepo = "reportportal/$project.name"
     githubReleaseNotesFile = 'CHANGELOG.md'
 
