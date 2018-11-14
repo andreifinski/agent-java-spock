@@ -37,7 +37,7 @@ bintray {
     websiteUrl = 'https://reportportal.github.io/'
     issueTrackerUrl = "https://github.com/andreifinski/$project.name/issues"
     vcsUrl = "https://github.com/andreifinski/$project.name"
-    githubRepo = "reportportal/$project.name"
+    githubRepo = "andreifinski/$project.name"
     githubReleaseNotesFile = 'CHANGELOG.md'
 
     userOrg = 'sandbox-af'

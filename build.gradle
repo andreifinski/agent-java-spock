@@ -37,9 +37,6 @@ javadoc {
 }
 
 release {
-  git{
-    requireBranch = null
-  }
   failOnCommitNeeded = false
   failOnPublishNeeded = false
 }
@@ -47,4 +44,3 @@ release {
 task wrapper(type: Wrapper) {
   gradleVersion = '3.0'
 }
-
