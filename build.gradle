@@ -37,6 +37,7 @@ javadoc {
 }
 
 release {
+  preCommitText = "[ci skip]"
   failOnCommitNeeded = false
   failOnPublishNeeded = false
 }
