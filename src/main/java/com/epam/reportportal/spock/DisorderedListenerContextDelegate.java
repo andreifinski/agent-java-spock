@@ -31,9 +31,9 @@ import java.util.LinkedList;
  * The main purpose is bypassing an issue with "mixing" of event tracking, i.e. using the current approach
  * the notification order can look like:
  * 1) beforeFeature/beforeIteration is called on {@link AbstractRunListener} -> item is tracked on RP and stored in context
- * 2) 'setup' method for iteration/feature from p.1. is registered -> associated item is tracked on RP and stored in context
+ * 2) 'setup' method for iteration/feature from p.1. is registered - associated item is tracked on RP and stored in context
  * (item from p.1 is erased)
- * 3) 'setup' method is done -> context is flushed
+ * 3) 'setup' method is done - context is flushed
  * 4) As a result all trackable logging event during the fixture/iteration execution are missed due context emptiness
  *
  * Created by Dzmitry_Mikhievich
