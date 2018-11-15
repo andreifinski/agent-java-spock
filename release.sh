@@ -9,4 +9,4 @@ git remote set-url origin https://andreifinski:$GH_TOKEN@github.com/andreifinski
 git checkout master
 git update-index --chmod=+x gradlew
 chmod +x gradlew
-./gradlew release bintrayUpload -Prelease.useAutomaticVersion=true --debug --stacktrace -Dbintray.user=$BINTRAY_USER -Dbintray.key=$BINTRAY_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER
+./gradlew release -Prelease.useAutomaticVersion=true --debug --stacktrace
