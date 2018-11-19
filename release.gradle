@@ -1,3 +1,15 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath 'org.ajoberstar:grgit:1.6.0-rc.1'
+  }
+}
+
+apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -12,6 +24,11 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 javadoc() {
   failOnError = false
+}
+
+artifacts {
+  archives sourcesJar
+  archives javadocJar
 }
 
 publishing {
@@ -30,6 +47,7 @@ bintray {
   user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
   key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_KEY')
   publications = ['mavenJava']
+  publish = true
   pkg {
     repo = 'rp'
     name = "$project.name"
@@ -39,8 +57,37 @@ bintray {
     vcsUrl = "https://github.com/andreifinski/$project.name"
     githubRepo = "andreifinski/$project.name"
     githubReleaseNotesFile = 'CHANGELOG.md'
+
     userOrg = 'sandbox-af'
     licenses = ['GPL-3.0']
   }
 }
+
+ext {
+  grgit = org.ajoberstar.grgit.Grgit.open(dir: '.')
+}
+
+task releaseDockerfile(type: Copy) {
+  /* copy dockerfile and replace version of JAR */
+  from('docker/Dockerfile-release')
+
+  filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: project.properties.findAll { it.value instanceof String }.collectEntries {
+    [it.key, it.value]
+  })
+
+  into "${project.projectDir}/"
+  rename('Dockerfile-release', 'Dockerfile')
+}
+
+task addDockerfileToGit << {
+  grgit.add(patterns: ['Dockerfile'])
+}
+
+task removeDockerfileFromGit << {
+  grgit.remove(patterns: ['Dockerfile'])
+}
+
+addDockerfileToGit.dependsOn releaseDockerfile
+updateVersion.dependsOn removeDockerfileFromGit
+beforeReleaseBuild.dependsOn addDockerfileToGit
 afterReleaseBuild.dependsOn bintrayUpload
